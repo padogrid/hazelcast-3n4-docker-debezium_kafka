@@ -22,7 +22,7 @@ JAVA_OPTS="-Xms256m -Xmx256m"
 HAZELCAST_CLIENT_CONFIG_FILE="$APP_DIR/hazelcast-addon/etc/hazelcast-client.xml"
 JAVA_OPTS="$JAVA_OPTS -Dhazelcast.client.config=$HAZELCAST_CLIENT_CONFIG_FILE"
 
-CLASSPATH="$CLASSPATH:$APP_DIR/hazelcast-addon/plugins/*"
+CLASSPATH="$CLASSPATH:$APP_DIR/padogrid/plugins/*"
 if [[ ${OS_NAME} == CYGWIN* ]]; then
    CLASSPATH="$(cygpath -wp "$CLASSPATH")"
 fi

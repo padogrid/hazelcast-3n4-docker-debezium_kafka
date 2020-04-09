@@ -1,6 +1,6 @@
 # Debezium-Kafka Hazelcast Connector
 
-This bundle integrates Hazelcast with Debezium for ingesting initial data and CDC records from MySQL into a Hazelcast cluster via a Kafka sink connector included in the `hazelcast-addon` distribution. It supports inserts, updates and deletes.
+This bundle integrates Hazelcast with Debezium for ingesting initial data and CDC records from MySQL into a Hazelcast cluster via a Kafka sink connector included in the `padogrid` distribution. It supports inserts, updates and deletes.
 
 ## Installing Bundle
 
@@ -36,32 +36,32 @@ All the commands provided in the tutorial are wrapped in the scripts found in th
 
 ## Building Demo
 
-We must first build the demo by running the `build_app` command as shown below. This command compiles and packages the `VersionedPortable` data (domain) classes found in the source directory `src`. It also copies the Hazelcast and `hazelcast-addon` jar files to the Docker container mounted volume in the `hazelcast-addon` directory so that the Hazelcast Debezium Kafka connector can include them in its class path.
+We must first build the demo by running the `build_app` command as shown below. This command compiles and packages the `VersionedPortable` data (domain) classes found in the source directory `src`. It also copies the Hazelcast and `hazelcast-addon-core` jar files to the Docker container mounted volume in the `padogrid` directory so that the Hazelcast Debezium Kafka connector can include them in its class path.
 
 ```console
 cd_docker debezium_kafka; cd bin_sh
 ./build_app
 ```
 
-Upon successful build, the `hazelcast-addon` directory should have jar files similar to the following:
+Upon successful build, the `padogrid` directory should have jar files similar to the following:
 
 ```console
 cd_docker debezium_kafka
-tree hazelcast-addon
+tree padogrid
 ```
 
 ```console
-hazelcast-addon/
+padogrid/
 ├── etc
 │   └── hazelcast-client.xml
 ├── lib
-│   ├── hazelcast-addon-common-0.9.0-SNAPSHOT.jar
-│   ├── hazelcast-addon-core-4-0.9.0-SNAPSHOT.jarr
+│   ├── hazelcast-addon-common-0.9.1-SNAPSHOT.jar
+│   ├── hazelcast-addon-core-4-0.9.1-SNAPSHOT.jarr
 │   └── hazelcast-enterprise-all-4.0.jar
 ├── log
 └── plugins
     ├── debezium-demo-data-1.0-SNAPSHOT.jar
-    └── hazelcast-addon-core-4-0.9.0-SNAPSHOT-tests.jar
+    └── hazelcast-addon-core-4-0.9.1-SNAPSHOT-tests.jar
 ```
 
 
@@ -90,7 +90,7 @@ If you are using a host IP other than `host.docker.internal` then you must also 
 
 ```console
 cd_docker debezium_kafka
-vi hazelcast-addon/etc/hazelcast-client.xml
+vi padogrid/etc/hazelcast-client.xml
 ```
 
 Replace `host.docker.internal` in `hazelcast-client.xml` with your host IP address.
@@ -116,7 +116,7 @@ Edit `hazelcast.xml` and register the portable factory class as shown below.
 
 ```console
 cd_docker hazelcast
-vi hazelcast-addon/etc/hazelcast.xml
+vi padogrid/etc/hazelcast.xml
 ```
 
 ```xml
@@ -137,7 +137,7 @@ Copy the demo data jar file into the `plugins` directory as follows.
 
 ```console
 cd_docker hazelcast
-cp $HAZELCAST_ADDON_WORKSPACE/docker/debezium_kafka/hazelcast-addon/plugins/debezium-demo-data-1.0-SNAPSHOT.jar hazelcast-addon/plugins/
+cp $HAZELCAST_ADDON_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar padogrid/plugins/
 ```
 
 ## Starting Docker Containers
@@ -181,7 +181,7 @@ cd_docker debezium_kafka; cd bin_sh
 
 ### Register Kafka Connect via REST API
 
-There are two (2) Kafka connectors that we must register. The MySQL connector is provided by Debezium and the Hazelcast connector is part of the `hazelcast-addon` distribution. 
+There are two (2) Kafka connectors that we must register. The MySQL connector is provided by Debezium and the Hazelcast connector is part of the `padogrid` distribution. 
 
 ```console
 cd_docker debezium_kafka; cd bin_sh
@@ -257,7 +257,7 @@ Upon build completion, copy the demo data jar file to the destkop `plugins` dire
 ```console
 cd_app desktop
 cd hazelcast-desktop_<version>
-cp $HAZELCAST_ADDON_WORKSPACE/docker/debezium_kafka/hazelcast-addon/plugins/debezium-demo-data-1.0-SNAPSHOT.jar plugins/
+cp $HAZELCAST_ADDON_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar plugins/
 ```
 
 Edit the `pado.properties` file and enter the `PortableFactoryImpl` class as follows.
