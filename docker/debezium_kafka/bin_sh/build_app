@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+SCRIPT_DIR="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
+. $SCRIPT_DIR/.addonenv.sh
+
+EXECUTABLE="`basename $0`"
+
+if [ "$HELP" == "true" ]; then
+   echo "Usage:"
+   echo "   ./$EXECUTABLE [-clean] [-?]"
+   echo ""
+   echo "   Builds the Debezium demo data jar and copies the hazelcast jar files to the"
+   echo "   'hazelcast-addon' directory which is mounted by the Docker Hazelcast connector container."
+   echo ""
+   echo "      $APP_DIR/hazelcast-addon/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
+   echo ""
+   echo "Default: ./$EXECUTABLE"
+   echo ""
+   exit
+fi
+
+pushd $APP_DIR > /dev/null
+
+# Change Hazelcast version number in pom.xml and hazelcast-client.xml
+if [ $HAZELCAST_MAJOR_VERSION_NUMBER -lt 4 ]; then
+   VERSION_NUMBER="3.12"
+else
+   VERSION_NUMBER="4.0"
+fi
+# SED backup prefix
+if [[ ${OS_NAME} == DARWIN* ]]; then
+   # Mac - space required
+   __SED_BACKUP=" 0"
+else
+   __SED_BACKUP="0"
+fi
+sed -i${__SED_BACKUP} 's/<hazelcast.version>.*<\/hazelcast.version>/<hazelcast.version>'${VERSION_NUMBER}'<\/hazelcast.version>/' pom.xml
+sed -i${__SED_BACKUP} 's/hazelcast-client-config-.*.xsd/hazelcast-client-config-'${VERSION_NUMBER}'.xsd/' hazelcast-addon/etc/hazelcast-client.xml
+
+# Build debezium-demo-data-1.0-SNAPSHOT.jar
+mvn package clean package
+
+# Copy the hazelcast and hazelcast-addon jar files
+if [ ! -d hazelcast-addon/lib ]; then
+   mkdir -p hazelcast-addon/lib
+fi
+if [ ! -d hazelcast-addon/plugins ]; then
+   mkdir -p hazelcast-addon/plugins
+fi
+if [ ! -d hazelcast-addon/log ]; then
+   mkdir -p hazelcast-addon/log
+fi
+if [ ! -d hazelcast-addon/etc ]; then
+   mkdir -p hazelcast-addon/etc
+fi
+
+cp $HAZELCAST_HOME/lib/hazelcast-*all-*.jar hazelcast-addon/lib/
+cp $HAZELCAST_ADDON_HOME/lib/hazelcast-addon-common*.jar hazelcast-addon/lib/
+cp $HAZELCAST_ADDON_HOME/lib/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/lib/
+cp $HAZELCAST_ADDON_HOME/plugins/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/plugins/
+
+popd > /dev/null
+
+#
+# Display build information
+#
+echo ""
+echo "Workspace: $HAZELCAST_ADDON_WORKSPACE"
+echo ""
+echo "Build complete"
+echo ""
+echo "   $APP_DIR/hazelcast-addon/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
+echo ""

@@ -1,0 +1,18 @@
+{
+    "name": "debezium-hazelcast-sink",
+    "config": {
+        "connector.class": "org.hazelcast.addon.kafka.debezium.DebeziumKafkaSinkConnector",
+        "tasks.max": "1",
+        "topics": "customers",
+        "hazelcast.client.config": "/hazelcast-addon/etc/hazelcast-client.xml",
+        "map": "inventory/customers",
+        "smt.enabled": false,
+        "delete.enabled": true,
+        "key.class": "java.lang.String",
+        "key.column.names": "id",
+        "key.field.names": "id",
+        "value.class": "org.hazelcast.addon.demo.debezium.data.Customer",
+        "value.column.names": "id, first_name, last_name, email",
+        "value.field.names": "id, firstName, lastName, email"
+     }
+}
