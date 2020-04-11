@@ -137,7 +137,7 @@ Copy the demo data jar file into the `plugins` directory as follows.
 
 ```console
 cd_docker hazelcast
-cp $HAZELCAST_ADDON_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar padogrid/plugins/
+cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar padogrid/plugins/
 ```
 
 ## Starting Docker Containers
@@ -257,7 +257,7 @@ Upon build completion, copy the demo data jar file to the destkop `plugins` dire
 ```console
 cd_app desktop
 cd hazelcast-desktop_<version>
-cp $HAZELCAST_ADDON_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar plugins/
+cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar plugins/
 ```
 
 Edit the `pado.properties` file and enter the `PortableFactoryImpl` class as follows.

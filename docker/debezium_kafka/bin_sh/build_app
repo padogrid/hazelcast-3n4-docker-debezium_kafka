@@ -54,9 +54,9 @@ if [ ! -d hazelcast-addon/etc ]; then
 fi
 
 cp $HAZELCAST_HOME/lib/hazelcast-*all-*.jar hazelcast-addon/lib/
-cp $HAZELCAST_ADDON_HOME/lib/hazelcast-addon-common*.jar hazelcast-addon/lib/
-cp $HAZELCAST_ADDON_HOME/lib/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/lib/
-cp $HAZELCAST_ADDON_HOME/plugins/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/plugins/
+cp $PADOGRID_HOME/lib/hazelcast-addon-common*.jar hazelcast-addon/lib/
+cp $PADOGRID_HOME/lib/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/lib/
+cp $PADOGRID_HOME/plugins/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/plugins/
 
 popd > /dev/null
 
@@ -64,7 +64,7 @@ popd > /dev/null
 # Display build information
 #
 echo ""
-echo "Workspace: $HAZELCAST_ADDON_WORKSPACE"
+echo "Workspace: $PADOGRID_WORKSPACE"
 echo ""
 echo "Build complete"
 echo ""
