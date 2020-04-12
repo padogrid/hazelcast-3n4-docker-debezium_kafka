@@ -19,7 +19,7 @@
 JAVA_OPTS="-Xms256m -Xmx256m"
 
 # HAZELCAST_CLIENT_CONFIG_FILE defaults to etc/hazelcast-client.xml
-HAZELCAST_CLIENT_CONFIG_FILE="$APP_DIR/hazelcast-addon/etc/hazelcast-client.xml"
+HAZELCAST_CLIENT_CONFIG_FILE="$APP_DIR/padogrid/etc/hazelcast-client.xml"
 JAVA_OPTS="$JAVA_OPTS -Dhazelcast.client.config=$HAZELCAST_CLIENT_CONFIG_FILE"
 
 CLASSPATH="$CLASSPATH:$APP_DIR/padogrid/plugins/*"

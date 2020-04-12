@@ -4,7 +4,7 @@
         "connector.class": "org.hazelcast.addon.kafka.debezium.DebeziumKafkaSinkConnector",
         "tasks.max": "1",
         "topics": "customers",
-        "hazelcast.client.config": "/hazelcast-addon/etc/hazelcast-client.xml",
+        "hazelcast.client.config": "/padogrid/etc/hazelcast-client.xml",
         "map": "inventory/customers",
         "smt.enabled": false,
         "delete.enabled": true,

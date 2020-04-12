@@ -6,7 +6,7 @@
         "topics": "customers",
         "transforms": "unwrap",
         "transforms.unwrap.type": "io.debezium.transforms.UnwrapFromEnvelope",
-        "hazelcast.client.config": "/hazelcast-addon/etc/hazelcast-client.xml",
+        "hazelcast.client.config": "/padogrid/etc/hazelcast-client.xml",
         "map": "inventory/customers",
         "smt.enabled": true,
         "delete.enabled": true,

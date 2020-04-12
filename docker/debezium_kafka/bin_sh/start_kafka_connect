@@ -4,4 +4,4 @@ SCRIPT_DIR="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
 
 EXECUTABLE="`basename $0`"
 
-docker run --volume $APP_DIR/hazelcast-addon:/hazelcast-addon -it --rm --name connect -p 8083:8083 -e CONNECT_PLUGIN_PATH=/kafka/connect,/hazelcast-addon/lib,/hazelcast-addon/plugins, -e CLASSPATH=/hazelcast-addon/lib/*:/hazelcast-addon/plugins/* -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs -e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses --link zookeeper:zookeeper --link kafka:kafka --link mysql:mysql debezium/connect:1.0
+docker run --volume $APP_DIR/padogrid:/padogrid -it --rm --name connect -p 8083:8083 -e CONNECT_PLUGIN_PATH=/kafka/connect,/padogrid/plugins,/padogrid/lib, -e CLASSPATH=/padogrid/plugins/*:/padogrid/lib/* -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs -e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses --link zookeeper:zookeeper --link kafka:kafka --link mysql:mysql debezium/connect:1.0

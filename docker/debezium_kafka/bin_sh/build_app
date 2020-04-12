@@ -9,9 +9,9 @@ if [ "$HELP" == "true" ]; then
    echo "   ./$EXECUTABLE [-clean] [-?]"
    echo ""
    echo "   Builds the Debezium demo data jar and copies the hazelcast jar files to the"
-   echo "   'hazelcast-addon' directory which is mounted by the Docker Hazelcast connector container."
+   echo "   'padogrid' directory which is mounted by the Docker Hazelcast connector container."
    echo ""
-   echo "      $APP_DIR/hazelcast-addon/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
+   echo "      $APP_DIR/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
    echo ""
    echo "Default: ./$EXECUTABLE"
    echo ""
@@ -34,29 +34,29 @@ else
    __SED_BACKUP="0"
 fi
 sed -i${__SED_BACKUP} 's/<hazelcast.version>.*<\/hazelcast.version>/<hazelcast.version>'${VERSION_NUMBER}'<\/hazelcast.version>/' pom.xml
-sed -i${__SED_BACKUP} 's/hazelcast-client-config-.*.xsd/hazelcast-client-config-'${VERSION_NUMBER}'.xsd/' hazelcast-addon/etc/hazelcast-client.xml
+sed -i${__SED_BACKUP} 's/hazelcast-client-config-.*.xsd/hazelcast-client-config-'${VERSION_NUMBER}'.xsd/' padogrid/etc/hazelcast-client.xml
 
 # Build debezium-demo-data-1.0-SNAPSHOT.jar
 mvn package clean package
 
 # Copy the hazelcast and hazelcast-addon jar files
-if [ ! -d hazelcast-addon/lib ]; then
-   mkdir -p hazelcast-addon/lib
+if [ ! -d padogrid/lib ]; then
+   mkdir -p padogrid/lib
 fi
-if [ ! -d hazelcast-addon/plugins ]; then
-   mkdir -p hazelcast-addon/plugins
+if [ ! -d padogrid/plugins ]; then
+   mkdir -p padogrid/plugins
 fi
-if [ ! -d hazelcast-addon/log ]; then
-   mkdir -p hazelcast-addon/log
+if [ ! -d padogrid/log ]; then
+   mkdir -p padogrid/log
 fi
-if [ ! -d hazelcast-addon/etc ]; then
-   mkdir -p hazelcast-addon/etc
+if [ ! -d padogrid/etc ]; then
+   mkdir -p padogrid/etc
 fi
 
-cp $HAZELCAST_HOME/lib/hazelcast-*all-*.jar hazelcast-addon/lib/
-cp $PADOGRID_HOME/lib/hazelcast-addon-common*.jar hazelcast-addon/lib/
-cp $PADOGRID_HOME/lib/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/lib/
-cp $PADOGRID_HOME/plugins/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar hazelcast-addon/plugins/
+cp $HAZELCAST_HOME/lib/hazelcast-*all-*.jar padogrid/lib/
+cp $PADOGRID_HOME/hazelcast/lib/hazelcast-addon-common*.jar padogrid/lib/
+cp $PADOGRID_HOME/hazelcast/lib/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar padogrid/lib/
+cp $PADOGRID_HOME/hazelcast/plugins/v$HAZELCAST_MAJOR_VERSION_NUMBER/hazelcast-addon-core*.jar padogrid/plugins/
 
 popd > /dev/null
 
@@ -68,5 +68,5 @@ echo "Workspace: $PADOGRID_WORKSPACE"
 echo ""
 echo "Build complete"
 echo ""
-echo "   $APP_DIR/hazelcast-addon/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
+echo "   $APP_DIR/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
 echo ""
