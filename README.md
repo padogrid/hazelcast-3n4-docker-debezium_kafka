@@ -160,23 +160,23 @@ Launch six (6) terminals and run each script from their own terminal as shown be
 ```console
 cd_docker debezium_kafka; cd bin_sh
 
-# 1. Start Zookeeper
+# 1. Start Zookeeper (include '-d' to run it in the background)
 ./start_zookeeper
 
-# 2. Start Kafka
+# 2. Start Kafka (include '-d' to run it in the background)
 ./start_kafka
 
-# 3. Start MySQL database
+# 3. Start MySQL database (include '-d' to run it in the background)
 ./start_mysql
 
-# 4. Start MySQL CLI
-./start_mysql_cli
-
-# 5. Start Kafka Connect
+# 4. Start Kafka Connect (include '-d' to run it in the background)
 ./start_kafka_connect
 
-# 6. Start topic watcher
+# 5. Start topic watcher
 ./watch_topic_customers
+
+# 6. Start MySQL CLI
+./start_mysql_cli
 ```
 
 ### Register Kafka Connect via REST API
