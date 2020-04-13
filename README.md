@@ -10,6 +10,8 @@ This bundle supports Hazelcast 3.12.x and 4.0.
 install_bundle -download hazelcast-3n4-docker-debezium_kafka
 ```
 
+:exclamation: If you are running this demo on WSL, make sure your workspace is on a shared folder. The Docker volume it creates will not be visible otherwise.
+
 ## Use Case
 
 This use case ingests data changes made in the MySQL database into a Hazelcast cluster via Kafka connectors: the Debezium MySQL source connector and the `hazelcast-addon` Debezium sink connector.
@@ -60,8 +62,8 @@ padogrid/
 │   └── hazelcast-enterprise-all-4.0.jar
 ├── log
 └── plugins
-    ├── debezium-demo-data-1.0-SNAPSHOT.jar
-    └── hazelcast-addon-core-4-0.9.1-SNAPSHOT-tests.jar
+    ├── hazelcast-addon-core-4-0.9.1-SNAPSHOT-tests.jar
+    └── hazelcast-addon-debezium_kafka-1.0.0.jar
 ```
 
 
@@ -142,7 +144,7 @@ cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data
 
 ## Starting Docker Containers
 
-There are numerous Docker containers to this demo. We'll first start the Hazelcast cluster containers and then proceed with the Debezium containers. For this demo, we intentionally made each container to run in the foreground so that you can view the log events. You will need to launch a total of eight (8) terminals. 
+There are numerous Docker containers to this demo. We'll first start the Hazelcast cluster containers and then proceed with the Debezium containers. By default, the scripts provided run the containers in the foreground so that you can view the log events. You will need to launch a total of eight (8) terminals. If you have a screen splitter such as Windows Terminal, it will make things easier. You can also run some of the scripts in the background by including the '-d' option. These scripts are mentioned below.
 
 ### Start Hazelcast Containers
 
@@ -181,7 +183,7 @@ cd_docker debezium_kafka; cd bin_sh
 
 ### Register Kafka Connect via REST API
 
-There are two (2) Kafka connectors that we must register. The MySQL connector is provided by Debezium and the Hazelcast connector is part of the `padogrid` distribution. 
+There are two (2) Kafka connectors that we must register. The MySQL connector is provided by Debezium and the Hazelcast connector is part of the PadoGrid distribution. 
 
 ```console
 cd_docker debezium_kafka; cd bin_sh
