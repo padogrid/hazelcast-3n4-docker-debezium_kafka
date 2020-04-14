@@ -7,7 +7,7 @@ This bundle integrates Hazelcast with Debezium for ingesting initial data and CD
 This bundle supports Hazelcast 3.12.x and 4.0.
 
 ```console
-install_bundle -download hazelcast-3n4-docker-debezium_kafka
+install_bundle -download bundle-hazelcast-3n4-docker-debezium_kafka
 ```
 
 :exclamation: If you are running this demo on WSL, make sure your workspace is on a shared folder. The Docker volume it creates will not be visible otherwise.
