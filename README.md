@@ -181,6 +181,20 @@ cd_docker debezium_kafka; cd bin_sh
 ./start_mysql_cli
 ```
 
+### View Management Center
+
+**URL:** http://host.docker.internal:8080/hazelcast-mancenter
+
+If the managenment center prompts for adding a cluster config then make sure to enter the following.
+
+```console
+Cluster Name: dev
+Cluster Config State: Enabled
+Member Addresses: host.docker.internal
+```
+
+The member addresses must be the host IP that all the members have access to as described in the [Creating-Hazelcast-Docker-Containers](Creating Hazelcast Docker Containers) section.
+
 ### Register Kafka Connect via REST API
 
 There are two (2) Kafka connectors that we must register. The MySQL connector is provided by Debezium and the Hazelcast connector is part of the PadoGrid distribution. 
