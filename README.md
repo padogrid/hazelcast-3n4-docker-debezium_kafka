@@ -139,7 +139,7 @@ Copy the demo data jar file into the `plugins` directory as follows.
 
 ```console
 cd_docker hazelcast
-cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar padogrid/plugins/
+cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/hazelcast-addon-debezium_kafka-1.0.0.jar padogrid/plugins/
 ```
 
 ## Starting Docker Containers
