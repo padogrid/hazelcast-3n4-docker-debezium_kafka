@@ -30,7 +30,7 @@ This use case ingests data changes made in the MySQL database into a Hazelcast c
 
 ## Debezium Tutorial
 
-The demo follows the Debezium Totorial steps shown in the link below.
+The demo follows the Debezium Tutorial steps shown in the link below.
 
 https://debezium.io/documentation/reference/1.0/tutorial.html#registering-connector-monitor-inventory-database
 
