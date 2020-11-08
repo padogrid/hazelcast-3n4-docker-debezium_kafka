@@ -9,5 +9,33 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+
+# Eclipse
 .project
 .settings
+
+# PadoGrid
+/.addonenv.sh
+/initenv.sh
+/setenv.sh
+/apps
+/bundles
+/clusters
+#/docker
+/k8s
+/lib
+/plugins
+/pods
+
+# App specifics
+tmp
+archive
+log
+lib
+desktop
+setenv.sh0
+build
+pado_*
+*.xml0
+docker/debezium_kafka/padogrid/plugins
+docker/hazelcast

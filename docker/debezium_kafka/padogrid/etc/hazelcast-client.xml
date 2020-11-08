@@ -15,8 +15,8 @@
 
 	<network>
 		<cluster-members>
-			<address>host.docker.internal:5701</address>
-			<address>host.docker.internal:5702</address>
+			<address>padomac:5701</address>
+			<address>padomac:5702</address>
 		</cluster-members>
 	</network>
 	<serialization>

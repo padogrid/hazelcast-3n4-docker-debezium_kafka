@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+EXECUTABLE="`basename $0`"
+
+if [ "$1" == "-?" ]; then
+cat <<EOF
+
+NAME
+   $EXECUTABLE - Deletes MySQL Kafka source connector
+
+DESCRIPTION
+   Deletes MySQL Kafka source connector
+
+EOF
+exit
+fi
+
+CONNECT_URL=$(hostname):8083
+echo curl -X DELETE $CONNECT_URL/connectors/inventory-connector
+curl -X DELETE $CONNECT_URL/connectors/inventory-connector
