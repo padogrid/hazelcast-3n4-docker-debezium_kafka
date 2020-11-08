@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+EXECUTABLE="`basename $0`"
+
+if [ "$1" == "-?" ]; then
+cat <<EOF
+
+NAME
+   $EXECUTABLE - Deletes Hazelcast Kafka sink connector
+
+DESCRIPTION
+   Deletes Hazelcast Kafka sink connector for the customers table.
+
+EOF
+exit
+fi
+
+CONNECT_URL=$(hostname):8083
+echo curl -X DELETE $CONNECT_URL/connectors/debezium-hazelcast-sink
+curl -X DELETE $CONNECT_URL/connectors/debezium-hazelcast-sink
