@@ -4,10 +4,10 @@ This bundle integrates Hazelcast with Debezium for ingesting initial data and CD
 
 ## Installing Bundle
 
-This bundle supports Hazelcast 3.12.x and 4.0.
+This bundle supports Hazelcast 3.12.x, 4.x, 5.x.
 
 ```console
-install_bundle -download bundle-hazelcast-3n4-docker-debezium_kafka
+install_bundle -download bundle-hazelcast-3n4n5-docker-debezium_kafka
 ```
 
 :exclamation: If you are running this demo on WSL, make sure your workspace is on a shared folder. The Docker volume it creates will not be visible otherwise.
@@ -16,13 +16,14 @@ install_bundle -download bundle-hazelcast-3n4-docker-debezium_kafka
 
 This use case ingests data changes made in the MySQL database into a Hazelcast cluster via Kafka connectors: the Debezium MySQL source connector and the `hazelcast-addon` Debezium sink connector.
 
-![Debezium-Kafka Diagram](/images/debezium-kafka.png)
+![Debezium-Kafka Diagram](images/debezium-kafka.png)
 
 ## Required Software
 
 - Docker
 - Docker Compose
-- Maven
+- Maven 3.x
+- PadoGrid 0.9.12-SNAPSHOT+ (10/18/2021) - for Hazelcast 5.x only
 
 ## Optional Software
 
@@ -37,6 +38,8 @@ https://debezium.io/documentation/reference/1.0/tutorial.html#registering-connec
 All the commands provided in the tutorial are wrapped in the scripts found in the `bin_sh` directory. We'll use these scripts to simplify the demo.
 
 ## Building Demo
+
+:pencil2: This bundle builds the demo enviroment based on the Hazelcast and Management versions in your workspace. Make sure your workspace has been configured with the desired versions before building the demo environment.
 
 We must first build the demo by running the `build_app` command as shown below. This command compiles and packages the `VersionedPortable` data (domain) classes found in the source directory `src`. It also copies the Hazelcast and `hazelcast-addon-core` jar files to the Docker container mounted volume in the `padogrid` directory so that the Hazelcast Debezium Kafka connector can include them in its class path.
 
@@ -57,12 +60,12 @@ padogrid/
 ├── etc
 │   └── hazelcast-client.xml
 ├── lib
-│   ├── hazelcast-addon-common-0.9.1-SNAPSHOT.jar
-│   ├── hazelcast-addon-core-4-0.9.1-SNAPSHOT.jarr
-│   └── hazelcast-enterprise-all-4.0.jar
+│   ├── hazelcast-addon-common-0.9.12-SNAPSHOT.jar
+│   ├── hazelcast-addon-core-5-0.9.12-SNAPSHOT.jar
+│   └── hazelcast-enterprise-5.0.jar
 ├── log
 └── plugins
-    ├── hazelcast-addon-core-4-0.9.1-SNAPSHOT-tests.jar
+    ├── hazelcast-addon-core-5-0.9.12-SNAPSHOT-tests.jar
     └── hazelcast-addon-debezium_kafka-1.0.0.jar
 ```
 
@@ -264,7 +267,7 @@ You can also install the desktop app and browse and query the map contents.
 
 ```console
 create_app -app desktop
-cd_app desktop; bin_sh
+cd_app desktop/bin_sh
 ./build_app
 ```
 
@@ -295,7 +298,7 @@ cd bin_sh
 ./desktop
 ```
 
-![Desktop Screenshot](/images/desktop-inventory-customers.png)
+![Desktop Screenshot](images/desktop-inventory-customers.png)
 
 ## Tearing Down
 

@@ -26,6 +26,8 @@ buildNumber.properties
 /lib
 /plugins
 /pods
+.workspace
+.cluster
 
 # App specifics
 tmp
