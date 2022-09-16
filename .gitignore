@@ -18,6 +18,7 @@ buildNumber.properties
 /.addonenv.sh
 /initenv.sh
 /setenv.sh
+/vmenv.sh
 /apps
 /bundles
 /clusters
