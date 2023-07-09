@@ -26,7 +26,6 @@ This use case ingests data changes made in the MySQL database into a Hazelcast c
 - Docker
 - Docker Compose
 - Maven 3.x
-- PadoGrid 0.9.12-SNAPSHOT+ (10/18/2021) - for Hazelcast 5.x only
 
 ## Optional Software
 
@@ -36,7 +35,7 @@ This use case ingests data changes made in the MySQL database into a Hazelcast c
 
 The demo follows the Debezium Tutorial steps shown in the link below.
 
-https://debezium.io/documentation/reference/1.0/tutorial.html#registering-connector-monitor-inventory-database
+https://debezium.io/documentation/reference/2.3/tutorial.html#registering-connector-monitor-inventory-database
 
 All the commands provided in the tutorial are wrapped in the scripts found in the `bin_sh` directory. We'll use these scripts to simplify the demo.
 
@@ -44,7 +43,17 @@ All the commands provided in the tutorial are wrapped in the scripts found in th
 
 :pencil2: This bundle builds the demo enviroment based on the Hazelcast and Management versions in your workspace. Make sure your workspace has been configured with the desired versions before building the demo environment.
 
-We must first build the demo by running the `build_app` command as shown below. This command compiles and packages the `VersionedPortable` data (domain) classes found in the source directory `src`. It also copies the Hazelcast and `hazelcast-addon-core` jar files to the Docker container mounted volume in the `padogrid` directory so that the Hazelcast Debezium Kafka connector can include them in its class path.
+First, change your cluster context to a Hazelcast cluster. This is required in order to configure the Hazelcast Docker containers.
+
+```bash
+# Create a Hazelcast cluster if it does not already exist.
+make_cluster -product hazelcast
+
+# Switch context
+switch_cluster myhz
+```
+
+Now, build the demo by running the `build_app` command as shown below. This command compiles and packages the `VersionedPortable` data (domain) classes found in the source directory `src`. It also copies the Hazelcast and `hazelcast-addon-core` jar files to the Docker container mounted volume in the `padogrid` directory so that the Hazelcast Debezium Kafka connector can include them in its class path.
 
 ```console
 cd_docker debezium_kafka; cd bin_sh
@@ -63,15 +72,15 @@ padogrid/
 ├── etc
 │   └── hazelcast-client.xml
 ├── lib
-│   ├── hazelcast-addon-common-0.9.12-SNAPSHOT.jar
-│   ├── hazelcast-addon-core-5-0.9.12-SNAPSHOT.jar
-│   └── hazelcast-enterprise-5.0.jar
+│   ├── hazelcast-addon-common-0.9.27.jar
+│   ├── hazelcast-addon-core-5-0.9.27.jar
+│   ├── hazelcast-enterprise-5.3.1.jar
+│   └── padogrid-common-0.9.27.jar
 ├── log
 └── plugins
-    ├── hazelcast-addon-core-5-0.9.12-SNAPSHOT-tests.jar
+    ├── hazelcast-addon-core-5-0.9.27-tests.jar
     └── hazelcast-addon-debezium_kafka-1.0.0.jar
 ```
-
 
 ## Creating Hazelcast Docker Containers
 
@@ -150,7 +159,7 @@ cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/hazelcast-addon-de
 
 ## Starting Docker Containers
 
-There are numerous Docker containers to this demo. We'll first start the Hazelcast cluster containers and then proceed with the Debezium containers. By default, the scripts provided run the containers in the foreground so that you can view the log events. You will need to launch a total of eight (8) terminals. If you have a screen splitter such as Windows Terminal, it will make things easier. You can also run some of the scripts in the background by including the '-d' option. These scripts are mentioned below.
+There are numerous Docker containers to this demo. We'll first start the Hazelcast cluster containers and then proceed with the Debezium containers. By default, the scripts provided run the containers in the foreground so that you can view the log events. You will need to launch a total of eight (8) terminals. If you have a screen splitter such as Windows Terminal, it will make things easier. You can also run some of the scripts in the background by including the `-d` option. These scripts are mentioned below.
 
 ### Start Hazelcast Containers
 
@@ -266,25 +275,22 @@ Map Values [inventory/customers]:
 
 ### Desktop
 
-You can also install the desktop app and browse and query the map contents.
+Optionally, you can also install the desktop app and query the map contents.
 
 ```console
-create_app -app desktop
-cd_app desktop/bin_sh
-./build_app
+create_app -product hazelcast -app desktop
 ```
 
-Upon build completion, copy the demo data jar file to the destkop `plugins` directory.
+To use the destkop, we need to add the demo data jar file in its class path and set the `PortableFactory` class ID. By default, the workspace's `plugins` directory is in the desktop class path. Let's place the demo jar file there.
+
+```console
+cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/hazelcast-addon-debezium_kafka-1.0.0.jar $PADOGRID_WORKSPACE/plugins/
+```
+
+Edit the `pado.properties` file and enter the `PortableFactoryImpl` class as follows. The `PortableFactory` class ID is `20001.
 
 ```console
 cd_app desktop
-cd hazelcast-desktop_<version>
-cp $PADOGRID_WORKSPACE/docker/debezium_kafka/padogrid/plugins/hazelcast-addon-debezium_kafka-1.0.0.jar plugins/
-```
-
-Edit the `pado.properties` file and enter the `PortableFactoryImpl` class as follows.
-
-```console
 vi etc/pado.properties
 ```
 
@@ -297,7 +303,7 @@ hazelcast.client.config.serialization.portable.factories=1:org.hazelcast.demo.nw
 Run the desktop.
 
 ```console
-cd bin_sh
+cd_app desktop/bin_sh
 ./desktop
 ```
 

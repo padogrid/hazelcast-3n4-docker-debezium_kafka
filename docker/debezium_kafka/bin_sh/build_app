@@ -21,7 +21,15 @@ fi
 pushd $APP_DIR > /dev/null
 
 # Change Hazelcast version number in pom.xml and hazelcast-client.xml
-if [ $HAZELCAST_MAJOR_VERSION_NUMBER -lt 4 ]; then
+if [ "$HAZELCAST_MAJOR_VERSION_NUMBER" = "" ]; then
+   VERSION_NUMBER="5.0"
+   HAZELCAST_MAJOR_VERSION_NUMBER=5
+   if [[ "$HAZELCAST_HOME" == *"hazelcast-enterprise"* ]]; then
+      IS_HAZELCAST_ENTERPRISE="true"
+   else
+      IS_HAZELCAST_ENTERPRISE="false"
+   fi
+elif [ $HAZELCAST_MAJOR_VERSION_NUMBER -lt 4 ]; then
    VERSION_NUMBER="3.12"
 elif [ $HAZELCAST_MAJOR_VERSION_NUMBER -eq 4 ]; then
    VERSION_NUMBER="4.0"
@@ -29,27 +37,21 @@ else
    VERSION_NUMBER="5.0"
 fi
 
-# SED backup prefix
-if [[ ${OS_NAME} == DARWIN* ]]; then
-   # Mac - space required
-   __SED_BACKUP=" 0"
-else
-   __SED_BACKUP="0"
-fi
 sed -i${__SED_BACKUP} 's/<hazelcast.version>.*<\/hazelcast.version>/<hazelcast.version>'${VERSION_NUMBER}'<\/hazelcast.version>/' pom.xml
 rm pom.xml0
 sed -i${__SED_BACKUP} 's/hazelcast-client-config-.*.xsd/hazelcast-client-config-'${VERSION_NUMBER}'.xsd/' padogrid/etc/hazelcast-client.xml
 rm padogrid/etc/hazelcast-client.xml0
 
-# Build debezium-demo-data-1.0-SNAPSHOT.jar
-mvn package clean package
-
 # Copy the hazelcast and hazelcast-addon jar files
 if [ ! -d padogrid/lib ]; then
    mkdir -p padogrid/lib
+else
+   rm -r padogrid/lib/*
 fi
 if [ ! -d padogrid/plugins ]; then
    mkdir -p padogrid/plugins
+else
+   rm -r padogrid/plugins/*
 fi
 if [ ! -d padogrid/log ]; then
    mkdir -p padogrid/log
@@ -57,6 +59,9 @@ fi
 if [ ! -d padogrid/etc ]; then
    mkdir -p padogrid/etc
 fi
+
+# Build hazelcast-addon-debezium_kafka-1.0.0.jar
+mvn clean package
 
 if [ $HAZELCAST_MAJOR_VERSION_NUMBER -le 4 ]; then
    cp $HAZELCAST_HOME/lib/hazelcast-*all-*.jar padogrid/lib/
@@ -82,5 +87,5 @@ echo "Workspace: $PADOGRID_WORKSPACE"
 echo ""
 echo "Build complete"
 echo ""
-echo "   $APP_DIR/padogrid/plugins/debezium-demo-data-1.0-SNAPSHOT.jar"
+echo "   $APP_DIR/padogrid/plugins/hazelcast-addon-debezium_kafka-1.0.0.jar"
 echo ""
