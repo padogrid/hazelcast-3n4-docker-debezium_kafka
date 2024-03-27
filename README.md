@@ -39,7 +39,7 @@ This use case ingests data changes made in the MySQL database into a Hazelcast c
 
 The demo follows the Debezium Tutorial steps shown in the link below.
 
-https://debezium.io/documentation/reference/2.3/tutorial.html#registering-connector-monitor-inventory-database
+<https://debezium.io/documentation/reference/2.3/tutorial.html#registering-connector-monitor-inventory-database>
 
 All the commands provided in the tutorial are wrapped in the scripts found in the `bin_sh` directory. We'll use these scripts to simplify the demo.
 
@@ -234,7 +234,7 @@ curl -Ss -H "Accept:application/json" localhost:8083/connectors/ | jq
 
 The last command should display the inventory connector that we registered previously.
 
-```console
+```json
 [
   "debezium-hazelcast-sink",
   "inventory-connector"
@@ -325,7 +325,7 @@ cd_app desktop/bin_sh
 
 ![Desktop Screenshot](images/desktop-inventory-customers.png)
 
-## Tearing Down
+## Teardown
 
 ![Terminal Driver](images/terminal.png) Terminal Driver
 
