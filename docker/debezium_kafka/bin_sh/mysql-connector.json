@@ -11,11 +11,11 @@
     "database.server.id": "184054",
     "database.server.name": "dbserver1",
     "database.whitelist": "inventory",
+    "schema.history.internal.kafka.topic": "dbhistory.inventory",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
     "transforms": "route",
     "transforms.route.type": "org.apache.kafka.connect.transforms.RegexRouter",
     "transforms.route.regex": "([^.]+)\\.([^.]+)\\.([^.]+)",
-    "transforms.route.replacement": "$3",
-    "schema.history.internal.kafka.topic": "dbhistory.inventory",
-    "schema.history.internal.kafka.bootstrap.servers": "kafka:9092"
+    "transforms.route.replacement": "$3"
   }
 }
